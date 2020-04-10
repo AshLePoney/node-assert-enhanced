@@ -1,0 +1,8 @@
+.github
+config
+test
+.editorconfig
+.eslintrc.js
+.gitattributes
+.npmignore
+commitlint.config.js
