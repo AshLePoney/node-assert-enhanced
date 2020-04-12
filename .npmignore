@@ -3,6 +3,7 @@ config
 test
 .editorconfig
 .eslintrc.js
+.eslintignore
 .gitattributes
 .npmignore
 commitlint.config.js
