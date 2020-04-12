@@ -201,7 +201,11 @@ function _ensureTarget (target) {
 }
 
 module.exports = exports = (() => {
-  const mod = Object.create(null);
+  const mod = function assert (arg, message) {
+    if (!arg) {
+      throw new EnhancedAssertionError('truthy', 'strictEqual', getTypeof, arg, message);
+    }
+  };
 
   // Store the _utils methods to the export to allow user to create custom assertions.
   Object.defineProperty(mod, '_utils', {
