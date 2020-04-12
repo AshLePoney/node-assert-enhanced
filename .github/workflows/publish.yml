@@ -26,8 +26,8 @@ jobs:
       - name: Run test converage
         run: npm run coverage
 
-  publish:
-    name: Publish
+  publish-npm:
+    name: Publish on NPM
     runs-on: ubuntu-latest
     needs: [tests]
     steps:
@@ -37,9 +37,29 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+          registry-url: https://registry.npmjs.org/
       - name: Run NPM ci
         run: npm ci
       - name: Publish to NPM
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-gpr:
+    name: Publish on GPR
+    runs-on: ubuntu-latest
+    needs: [tests]
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://npm.pkg.github.com/
+      - name: Run NPM ci
+        run: npm ci
+      - name: Publish to GPR
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
