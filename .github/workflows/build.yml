@@ -1,11 +1,11 @@
-name: Publish
+name: Build
 
 on:
   push:
-    branches-ignore:
+    branches:
       - '**'
-    tags:
-      - v?[0-9]+.[0-9]+.[0-9]+
+    tags-ignore:
+      - '**'
 
 jobs:
   tests:
@@ -26,10 +26,11 @@ jobs:
       - name: Run test converage
         run: npm run coverage
 
-  publish:
-    name: Publish
-    runs-on: ubuntu-latest
+  coverage:
+    if: contains(github.ref, 'master')
     needs: [tests]
+    name: CodeClimate Coverage
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v1
@@ -37,9 +38,14 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Run NPM ci
-        run: npm ci
-      - name: Publish to NPM
-        run: npm publish
+      - name: Run npm ci
+        run: npm install
+      - name: Runt test coverage
+        run: npm run coverage
+      - name: Report coverage to CodeClimate
+        uses: paambaati/codeclimate-action@v2.5.0
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          debug: true
+          coverageCommand: npm run coverage
