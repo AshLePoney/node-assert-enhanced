@@ -26,6 +26,13 @@ describe('module.exports (enhanced-assert)', () => {
       expect(enhancedAssert[name]).toBeInstanceOf(Function);
     });
   });
+
+  test('should the export to be an assert method', () => {
+    expect(() => enhancedAssert(true)).not.toThrow();
+    expect(() => enhancedAssert([null].length)).not.toThrow();
+    expect(() => enhancedAssert(false)).toThrowError(enhancedAssert.EnhancedAssertionError);
+    expect(() => enhancedAssert([].length)).toThrowError(enhancedAssert.EnhancedAssertionError);
+  });
 });
 
 describe('assert._utils', () => {
