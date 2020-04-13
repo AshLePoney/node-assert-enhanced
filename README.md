@@ -19,8 +19,6 @@
   </a>
 </p>
 
-This librairy provide an enhanced Node.js assert module.
-
 **IMPORTANT: This module is an improvement from [joyent/node-assert-plus](https://github.com/joyent/node-assert-plus) module with added assertions registration methods.**
 
 ## Installation:
@@ -38,7 +36,7 @@ function example (stdout, chunk, next) {
   assert.object(chunk, 'chunk');
   assert.string(chunk.id, 'chunk.id');
   assert.buffer(chunk.buffer, 'chunk.buffer');
-  assert.function(next, 'next');
+  assert.func(next, 'next');
 
   // ...
 
@@ -58,7 +56,7 @@ const definition = {
   }
 };
 
-assert._utils.register(null, definitions, { arrayOf: false, optionalArrayOf: false });
+assert.register(null, definitions, { arrayOf: false, optionalArrayOf: false });
 
 // Register to assert-enhanced:
 // assert.custom
@@ -99,9 +97,9 @@ AssertionError [ERR_ASSERTION]: myBoolArg (bool) is required.
 - assert.string
 - assert.symbol
 - assert.object
-- assert.function
+- assert.func
 - assert.array
-- assert.asyncFunction
+- assert.asyncFunc
 - assert.promise
 - assert.date
 - assert.regexp
@@ -115,7 +113,7 @@ AssertionError [ERR_ASSERTION]: myBoolArg (bool) is required.
 - assert.optionalString
 - assert.optionalSymbol
 - assert.optionalObject
-- assert.optionalFunction
+- assert.optionalFunc
 - assert.optionalArray
 - assert.optionalAsyncFunction
 - assert.optionalPromise
@@ -131,9 +129,9 @@ AssertionError [ERR_ASSERTION]: myBoolArg (bool) is required.
 - assert.arrayOfString
 - assert.arrayOfSymbol
 - assert.arrayOfObject
-- assert.arrayOfFunction
+- assert.arrayOfFunc
 - assert.arrayOfArray
-- assert.arrayOfAsyncFunction
+- assert.arrayOfAsyncFunc
 - assert.arrayOfPromise
 - assert.arrayOfDate
 - assert.arrayOfRegexp
@@ -147,16 +145,27 @@ AssertionError [ERR_ASSERTION]: myBoolArg (bool) is required.
 - assert.optionalArrayOfString
 - assert.optionalArrayOfSymbol
 - assert.optionalArrayOfObject
+- assert.optionalArrayOfFunc
+- assert.optionalArrayOfArray
+- assert.optionalArrayOfAsyncFunc
+- assert.optionalArrayOfPromise
+- assert.optionalArrayOfDate
+- assert.optionalArrayOfRegexp
+- assert.optionalArrayOfBuffer
+- assert.optionalArrayOfStream
+- assert.optionalArrayOfReadable
+- assert.optionalArrayOfWritable
+- assert.optionalArrayOfDuplex
 
-### Enhanced _utils:
+### Enhanced registration methods:
 
-- [assert._utils.register](#assert_utilsregistertarget-definitions-options-target)
-- [assert._utils.registerStandardAssertion](#assert_utilsregisterstandardassertiontarget-name-definition-target)
-- [assert._utils.registerOptionalAssertion](#assert_utilsregisteroptionalassertiontarget-name-definition-target)
-- [assert._utils.registerArrayOfAssertion](#assert_utilsregisterarrayofassertiontarget-name-definition-target)
-- [assert._utils.registerOptionalArrayOfAssertion](#assert_utilsregisteroptionalarrayofassertiontarget-name-definition-target)
-- [assert._utils.getClassname](#assert_utilsgetclassnamearg-string)
-- [assert._utils.getTypeof](#assert_utilsgettypeofarg-string)
+- [assert.register](#assertregistertarget-definitions-options-target)
+- [assert.registerStandardAssertion](#assertregisterstandardassertiontarget-name-definition-target)
+- [assert.registerOptionalAssertion](#assertregisteroptionalassertiontarget-name-definition-target)
+- [assert.registerArrayOfAssertion](#assertregisterarrayofassertiontarget-name-definition-target)
+- [assert.registerOptionalArrayOfAssertion](#assertregisteroptionalarrayofassertiontarget-name-definition-target)
+- [assert.getClassname](#assertgetclassnamearg-string)
+- [assert.getTypeof](#assertgettypeofarg-string)
 
 ### Node.js assert module:
 
@@ -182,7 +191,7 @@ See more on Node.js assert module: https://nodejs.org/api/assert.html
 - [assert.match](https://nodejs.org/api/assert.html#assert_assert_match_string_regexp_message) (>= v13.6.0)
 - [assert.doesNotMatch](https://nodejs.org/api/assert.html#assert_assert_doesnotmatch_string_regexp_message) (>= v13.6.0)
 
-#### assert._utils.register(target, definitions, options)->target
+#### assert.register(target, definitions, options)->target
 
 Register assertions sets.
 
@@ -198,16 +207,16 @@ const definitions = {
   custom: {
     check: (arg) => (arg instanceof Custom),
     operator: 'instanceof',
-    actual: assert._utils.getClassname
+    actual: assert.getClassname
   }
 };
 
-assert._utils.register(null, definitions, { optionalArrayOf: false });
+assert.register(null, definitions, { optionalArrayOf: false });
 
 // Register [standard, optional, arrayOf]
 ```
 
-#### assert._utils.registerStandardAssertion(target, name, definition)->target
+#### assert.registerStandardAssertion(target, name, definition)->target
 
 Register standard assertion.
 
@@ -219,14 +228,14 @@ Register standard assertion.
 
 Example:
 ```javascript
-assert._utils.registerStandardAssert(null, 'custom', {
+assert.registerStandardAssert(null, 'custom', {
   check: (arg) => (arg instanceof Custom),
   operator: 'instanceof',
-  actual: assert._utils.getClassname
+  actual: assert.getClassname
 });
 ```
 
-#### assert._utils.registerOptionalAssertion(target, name, definition)->target
+#### assert.registerOptionalAssertion(target, name, definition)->target
 
 Register optional assertion.
 
@@ -238,14 +247,14 @@ Register optional assertion.
 
 Example:
 ```javascript
-assert._utils.registerOptionalAssertion(null, 'custom', {
+assert.registerOptionalAssertion(null, 'custom', {
   check: (arg) => (arg instanceof Custom),
   operator: 'instanceof',
-  actual: assert._utils.getClassname
+  actual: assert.getClassname
 });
 ```
 
-#### assert._utils.registerArrayOfAssertion(target, name, definition)->target
+#### assert.registerArrayOfAssertion(target, name, definition)->target
 
 Register arrayOf assertion.
 
@@ -257,14 +266,14 @@ Register arrayOf assertion.
 
 Example:
 ```javascript
-assert._utils.registerArrayOfAssertion(null, 'custom', {
+assert.registerArrayOfAssertion(null, 'custom', {
   check: (arg) => (arg instanceof Custom),
   operator: 'instanceof',
-  actual: assert._utils.getClassname
+  actual: assert.getClassname
 });
 ```
 
-#### assert._utils.registerOptionalArrayOfAssertion(target, name, definition)->target
+#### assert.registerOptionalArrayOfAssertion(target, name, definition)->target
 
 Register optional arrayOf assertion.
 
@@ -276,14 +285,14 @@ Register optional arrayOf assertion.
 
 Example:
 ```javascript
-assert._utils.registerOptionalArrayOfAssertion(null, 'custom', {
+assert.registerOptionalArrayOfAssertion(null, 'custom', {
   check: (arg) => (arg instanceof Custom),
   operator: 'instanceof',
-  actual: assert._utils.getClassname
+  actual: assert.getClassname
 });
 ```
 
-#### assert._utils.getClassname(arg)->string
+#### assert.getClassname(arg)->string
 
 Get an object classname, it's used to seed the `actual` property from the definitions.
 
@@ -291,7 +300,7 @@ Get an object classname, it's used to seed the `actual` property from the defini
 |--------------|----------|-------------|
 |      arg     |    any   |             |
 
-#### assert._utils.getTypeof(arg)->string
+#### assert.getTypeof(arg)->string
 
 Get a typeof, it's used to seed the `actual` property from the definitions.
 
