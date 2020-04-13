@@ -207,17 +207,27 @@ module.exports = exports = (() => {
     }
   };
 
-  // Store the _utils methods to the export to allow user to create custom assertions.
-  Object.defineProperty(mod, '_utils', {
-    value: {
-      register,
-      registerStandardAssert,
-      registerOptionalAssert,
-      registerArrayOfAssert,
-      registerOptionalArrayOfAssert,
-      getClassname,
-      getTypeof
-    }
+  // Store the registration methods to the export to allow user to create custom assertions.
+  Object.defineProperty(mod, 'register', {
+    value: register
+  });
+  Object.defineProperty(mod, 'registerStandardAssert', {
+    value: registerStandardAssert
+  });
+  Object.defineProperty(mod, 'registerOptionalAssert', {
+    value: registerOptionalAssert
+  });
+  Object.defineProperty(mod, 'registerArrayOfAssert', {
+    value: registerArrayOfAssert
+  });
+  Object.defineProperty(mod, 'registerOptionalArrayOfAssert', {
+    value: registerOptionalArrayOfAssert
+  });
+  Object.defineProperty(mod, 'getClassname', {
+    value: getClassname
+  });
+  Object.defineProperty(mod, 'getTypeof', {
+    value: getTypeof
   });
 
   // Export the default Node.js assert module.

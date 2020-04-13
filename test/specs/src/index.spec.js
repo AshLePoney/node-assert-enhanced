@@ -4,15 +4,14 @@ const enhancedAssert = require(path.resolve(__root, 'src/index.js'));
 const definitions = require(path.resolve(__root, 'src/definitions.js'));
 
 describe('module.exports (enhanced-assert)', () => {
-  test('should exported module includes _utils methods object.', () => {
-    expect(enhancedAssert).toHaveProperty('_utils');
-    expect(enhancedAssert._utils).toHaveProperty('register');
-    expect(enhancedAssert._utils).toHaveProperty('registerStandardAssert');
-    expect(enhancedAssert._utils).toHaveProperty('registerOptionalAssert');
-    expect(enhancedAssert._utils).toHaveProperty('registerArrayOfAssert');
-    expect(enhancedAssert._utils).toHaveProperty('registerOptionalArrayOfAssert');
-    expect(enhancedAssert._utils).toHaveProperty('getClassname');
-    expect(enhancedAssert._utils).toHaveProperty('getTypeof');
+  test('should exported module includes registration methods.', () => {
+    expect(enhancedAssert).toHaveProperty('register');
+    expect(enhancedAssert).toHaveProperty('registerStandardAssert');
+    expect(enhancedAssert).toHaveProperty('registerOptionalAssert');
+    expect(enhancedAssert).toHaveProperty('registerArrayOfAssert');
+    expect(enhancedAssert).toHaveProperty('registerOptionalArrayOfAssert');
+    expect(enhancedAssert).toHaveProperty('getClassname');
+    expect(enhancedAssert).toHaveProperty('getTypeof');
   });
 
   test('should exported module includes default Node.js assert props', () => {
@@ -35,22 +34,20 @@ describe('module.exports (enhanced-assert)', () => {
   });
 });
 
-describe('assert._utils', () => {
-  const utils = enhancedAssert._utils;
-
+describe('assert._enhancedAssert', () => {
   describe('register', () => {
     test('throw an error when the "target" argument is not valid', () => {
-      expect(() => utils.register(0, {}, {}))
+      expect(() => enhancedAssert.register(0, {}, {}))
         .toThrowError('The "target" argument must be an object or function.');
     });
 
     test('throw an error when the "definitions" argument is not valid', () => {
-      expect(() => utils.register({}, null, {}))
+      expect(() => enhancedAssert.register({}, null, {}))
         .toThrowError('The "definitions" argument must be an object.');
     });
 
     test('throw an error when the "options" argument is not valid', () => {
-      expect(() => utils.register({}, {}, null))
+      expect(() => enhancedAssert.register({}, {}, null))
         .toThrowError('The "options" argument must be an object.');
     });
 
@@ -64,13 +61,13 @@ describe('assert._utils', () => {
       };
       const ref = {};
 
-      const ret = utils.register(ref, defs);
+      const ret = enhancedAssert.register(ref, defs);
 
       expect(ref).toBe(ret);
     });
 
     test('should return the default exported module when "target" argument is not provided', () => {
-      const testID = '__test__.module._utils.register[0]';
+      const testID = '__test__.module._enhancedAssert.register[0]';
       const defs = {
         [testID]: {
           check: (arg) => (typeof arg === 'boolean'),
@@ -79,13 +76,13 @@ describe('assert._utils', () => {
         }
       };
 
-      const ret = utils.register(null, defs);
+      const ret = enhancedAssert.register(null, defs);
 
       expect(ret).toBe(enhancedAssert);
     });
 
     test('should not register method when options specify not', () => {
-      const ret = utils.register({}, { custom: {} }, {
+      const ret = enhancedAssert.register({}, { custom: {} }, {
         standard: false,
         optional: false,
         arrayOf: false,
@@ -107,7 +104,7 @@ describe('assert._utils', () => {
         }
       };
 
-      const ret = utils.register({}, defs);
+      const ret = enhancedAssert.register({}, defs);
 
       expect(ret).toHaveProperty('custom');
       expect(ret).toHaveProperty('optionalCustom');
