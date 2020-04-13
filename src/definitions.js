@@ -14,7 +14,7 @@ module.exports = {
     actual: getTypeof
   },
   number: {
-    check: (arg) => (typeof arg === 'number'),
+    check: (arg) => (typeof arg === 'number' && !Number.isNaN(arg)),
     operator: OPERATOR_STRICTEQUAL,
     actual: getTypeof
   },

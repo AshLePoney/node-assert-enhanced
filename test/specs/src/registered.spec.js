@@ -38,9 +38,11 @@ const entries = {
     valid: [
       -1,
       0,
-      1
+      1,
+      Infinity
     ],
     invalid: [
+      NaN,
       false,
       true,
       'abc',
