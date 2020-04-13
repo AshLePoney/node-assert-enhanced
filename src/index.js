@@ -227,6 +227,9 @@ module.exports = exports = (() => {
     });
   });
 
+  // Export the custom error;
+  Object.assign(mod, { EnhancedAssertionError });
+
   // Export the added types assertions.
   return register(mod, definitions);
 })();
