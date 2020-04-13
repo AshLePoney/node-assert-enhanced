@@ -117,7 +117,7 @@ const entries = {
       Symbol('__test__')
     ]
   },
-  function: {
+  func: {
     valid: [
       function () {},
       async function () {},
@@ -161,7 +161,7 @@ const entries = {
       new Promise(() => {})
     ]
   },
-  asyncFunction: {
+  asyncFunc: {
     valid: [
       async function () {}
     ],

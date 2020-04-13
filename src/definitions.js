@@ -35,7 +35,7 @@ module.exports = {
     operator: OPERATOR_STRICTEQUAL,
     actual: getTypeof
   },
-  function: {
+  func: {
     check: (arg) => (typeof arg === 'function'),
     operator: OPERATOR_STRICTEQUAL,
     actual: getTypeof
@@ -47,7 +47,7 @@ module.exports = {
     operator: 'Array.isArray',
     actual: getClassname
   },
-  asyncFunction: {
+  asyncFunc: {
     check: (arg) => (arg instanceof AsyncFunction),
     operator: OPERATOR_INSTANCEOF,
     actual: getClassname
