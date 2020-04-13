@@ -2,16 +2,16 @@ const { AssertionError } = require('assert');
 
 class EnhancedAssertionError extends AssertionError {
   /**
-   * @param {string|symbol} name - The assertion type key.
+   * @param {string} name - The assertion type name.
    * @param {string} operator - The assertion operator.
-   * @param {null|function} actual - The actual type getter.
-   * @param {any} arg - The asserted argument.
+   * @param {function|null|undefined} actual - The actual type getter.
+   * @param {any} value - The asserted value.
    * @param {string} message - The error message.
    */
-  constructor (name, operator, actual, arg, message) {
+  constructor (name, operator, actual, value, message) {
     super({
       message: `${message} (${name}) is required.`,
-      actual: typeof actual === 'function' ? actual(arg) : typeof arg,
+      actual: typeof actual === 'function' ? actual(value) : typeof value,
       expected: name,
       operator: operator || 'strictEqual',
       stackStartFn: EnhancedAssertionError

@@ -63,8 +63,8 @@ function registerStandardAssert (target, name, definition) {
   _throwOnInvalidRegistrationCallArguments(target, name, definition);
 
   Object.assign(target, {
-    [name]: function (arg, message) {
-      _hasPassedCheckOrThrow(name, definition, arg, message);
+    [name]: function (value, message) {
+      _hasPassedCheckOrThrow(name, definition, value, message);
     }
   });
 
@@ -87,11 +87,11 @@ function registerOptionalAssert (target, name, definition) {
   _throwOnInvalidRegistrationCallArguments(target, capitalizedName, definition);
 
   Object.assign(target, {
-    [capitalizedName]: function (arg, message) {
-      if (arg === null || typeof arg === 'undefined') {
+    [capitalizedName]: function (value, message) {
+      if (value === null || typeof value === 'undefined') {
         return;
       }
-      _hasPassedCheckOrThrow(name, definition, arg, message);
+      _hasPassedCheckOrThrow(name, definition, value, message);
     }
   });
 
@@ -114,12 +114,12 @@ function registerArrayOfAssert (target, name, definition) {
   _throwOnInvalidRegistrationCallArguments(target, capitalizedName, definition);
 
   Object.assign(target, {
-    [capitalizedName]: function (arg, message) {
-      if (!Array.isArray(arg)) {
-        throw new EnhancedAssertionError(capitalizedName, definition.operator, definition.actual, arg, message);
+    [capitalizedName]: function (value, message) {
+      if (!Array.isArray(value)) {
+        throw new EnhancedAssertionError(capitalizedName, definition.operator, definition.actual, value, message);
       }
-      for (let i = 0; i < arg.length; ++i) {
-        _hasPassedCheckOrThrow(name, definition, arg[i], message);
+      for (let i = 0; i < value.length; ++i) {
+        _hasPassedCheckOrThrow(name, definition, value[i], message);
       }
     }
   });
@@ -143,15 +143,15 @@ function registerOptionalArrayOfAssert (target, name, definition) {
   _throwOnInvalidRegistrationCallArguments(target, capitalizedName, definition);
 
   Object.assign(target, {
-    [capitalizedName]: function (arg, message) {
-      if (arg === null || typeof arg === 'undefined') {
+    [capitalizedName]: function (value, message) {
+      if (value === null || typeof value === 'undefined') {
         return;
       }
-      if (!Array.isArray(arg)) {
-        throw new EnhancedAssertionError(capitalizedName, definition.operator, definition.actual, arg, message);
+      if (!Array.isArray(value)) {
+        throw new EnhancedAssertionError(capitalizedName, definition.operator, definition.actual, value, message);
       }
-      for (let i = 0; i < arg.length; ++i) {
-        _hasPassedCheckOrThrow(name, definition, arg[i], message);
+      for (let i = 0; i < value.length; ++i) {
+        _hasPassedCheckOrThrow(name, definition, value[i], message);
       }
     }
   });
@@ -190,9 +190,9 @@ function _throwOnUnavailabilityProperty (target, name) {
   }
 }
 
-function _hasPassedCheckOrThrow (name, definition, arg, message) {
-  if (!definition.check(arg)) {
-    throw new EnhancedAssertionError(name, definition.operator, definition.actual, arg, message);
+function _hasPassedCheckOrThrow (name, definition, value, message) {
+  if (!definition.check(value)) {
+    throw new EnhancedAssertionError(name, definition.operator, definition.actual, value, message);
   }
 }
 
@@ -201,9 +201,9 @@ function _ensureTarget (target) {
 }
 
 module.exports = exports = (() => {
-  const mod = function assert (arg, message) {
-    if (!arg) {
-      throw new EnhancedAssertionError('truthy', 'strictEqual', getTypeof, arg, message);
+  const mod = function assert (value, message) {
+    if (!value) {
+      throw new EnhancedAssertionError('truthy', 'strictEqual', getTypeof, value, message);
     }
   };
 
