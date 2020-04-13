@@ -3,7 +3,7 @@ const { AssertionError } = require('assert');
 class EnhancedAssertionError extends AssertionError {
   /**
    * @param {string} name - The assertion type name.
-   * @param {string} operator - The assertion operator.
+   * @param {string|null} operator - The assertion operator.
    * @param {function|null|undefined} actual - The actual type getter.
    * @param {any} value - The asserted value.
    * @param {string} message - The error message.
