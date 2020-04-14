@@ -26,6 +26,11 @@
 npm install assert-enhanced
 ```
 
+For types definitions:
+```bash
+npm install AshLePoney/node-assert-enhanced-types --save-dev
+```
+
 ## Example:
 
 ```javascript
