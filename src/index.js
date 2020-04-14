@@ -116,7 +116,7 @@ function registerArrayOfAssert (target, name, definition) {
   Object.assign(target, {
     [capitalizedName]: function (value, message) {
       if (!Array.isArray(value)) {
-        throw new EnhancedAssertionError(capitalizedName, definition.operator, definition.actual, value, message);
+        _throwEnhancedAssertionError(capitalizedName, definition.operator, definition.actual, value, message);
       }
       for (let i = 0; i < value.length; ++i) {
         _hasPassedCheckOrThrow(name, definition, value[i], message);
@@ -148,7 +148,7 @@ function registerOptionalArrayOfAssert (target, name, definition) {
         return;
       }
       if (!Array.isArray(value)) {
-        throw new EnhancedAssertionError(capitalizedName, definition.operator, definition.actual, value, message);
+        _throwEnhancedAssertionError(capitalizedName, definition.operator, definition.actual, value, message);
       }
       for (let i = 0; i < value.length; ++i) {
         _hasPassedCheckOrThrow(name, definition, value[i], message);
@@ -157,6 +157,16 @@ function registerOptionalArrayOfAssert (target, name, definition) {
   });
 
   return target;
+}
+
+function _throwEnhancedAssertionError (name, operator, actual, value, message) {
+  throw new EnhancedAssertionError({
+    message: `${message} (${name}) is required.`,
+    actual: typeof actual === 'function' ? actual(value) : typeof value,
+    expected: name,
+    operator: operator || 'strictEqual',
+    stackStartFn: _throwEnhancedAssertionError
+  });
 }
 
 function _throwOnInvalidRegistrationCallArguments (target, name, definition) {
@@ -192,7 +202,7 @@ function _throwOnUnavailabilityProperty (target, name) {
 
 function _hasPassedCheckOrThrow (name, definition, value, message) {
   if (!definition.check(value)) {
-    throw new EnhancedAssertionError(name, definition.operator, definition.actual, value, message);
+    _throwEnhancedAssertionError(name, definition.operator, definition.actual, value, message);
   }
 }
 
@@ -203,7 +213,7 @@ function _ensureTarget (target) {
 module.exports = exports = (() => {
   const mod = function assert (value, message) {
     if (!value) {
-      throw new EnhancedAssertionError('truthy', 'strictEqual', getTypeof, value, message);
+      _throwEnhancedAssertionError('truthy', 'strictEqual', getTypeof, value, message);
     }
   };
 

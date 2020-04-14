@@ -2,20 +2,15 @@ const { AssertionError } = require('assert');
 
 class EnhancedAssertionError extends AssertionError {
   /**
-   * @param {string} name - The assertion type name.
-   * @param {string|null} operator - The assertion operator.
-   * @param {function|null|undefined} actual - The actual type getter.
-   * @param {any} value - The asserted value.
-   * @param {string} message - The error message.
+   * @param {object} options - The error options.
+   * @param {string} options.message - If provided, the error message is set to this value.
+   * @param {any} options.actual - The actual property on the error instance.
+   * @param {any} options.expected - The expected property on the error instance.
+   * @param {string} options.operator - The operator property on the error instance.
+   * @param {Function} stackStartFn - If provided, the generated stack trace omits frames before this function.
    */
-  constructor (name, operator, actual, value, message) {
-    super({
-      message: `${message} (${name}) is required.`,
-      actual: typeof actual === 'function' ? actual(value) : typeof value,
-      expected: name,
-      operator: operator || 'strictEqual',
-      stackStartFn: EnhancedAssertionError
-    });
+  constructor (options) {
+    super(options);
 
     Object.defineProperty(this, 'name', {
       enumerable: false,
