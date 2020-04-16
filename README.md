@@ -8,6 +8,9 @@
   <a alt="Build Status" href="https://github.com/AshLePoney/node-assert-enhanced/workflows/Build">
     <img src="https://github.com/AshLePoney/node-assert-enhanced/workflows/Build/badge.svg" />
   </a>
+  <a alt="Npm version" href="https://www.npmjs.com/package/assert-enhanced?activeTab=versions">
+    <img src="https://img.shields.io/npm/v/assert-enhanced.svg?longCache=true&logo=npm">
+  </a>
   <a alt="Test Coverage" href="https://codeclimate.com/github/AshLePoney/node-assert-enhanced/test_coverage">
     <img src="https://api.codeclimate.com/v1/badges/071825472e6870f786e0/test_coverage" />
   </a>
@@ -15,7 +18,7 @@
     <img src="https://api.codeclimate.com/v1/badges/071825472e6870f786e0/maintainability" />
   </a>
   <a alt="Node requierement version" href="https://github.com/AshLePoney/node-assert-enhanced/blob/master/package.json">
-    <img src="https://img.shields.io/node/v/chromatic-console.svg?longCache=true" />
+    <img src="https://img.shields.io/node/v/assert-enhanced.svg?longCache=true" />
   </a>
 </p>
 
